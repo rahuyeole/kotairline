@@ -1,0 +1,74 @@
+class Booking {
+    var source: String = ""
+    var destination: String = ""
+    var preferredTime: String = ""
+    var isOneWay: Boolean = true
+    var oneWayFlights: List<Flight> = emptyList()
+    var twoWayFlights: List<Flight> = emptyList()
+
+    fun greetUser() {
+        println("Welcome to the Airline Reservation System!")
+    }
+
+    fun getUserInput() {
+        println("Please provide the following information:")
+
+        do {
+            print("Source (Choose from ${Flights.validSources.joinToString()}): ")
+            source = readLine()?.trim() ?: ""
+        } while (!Flights.isValidSource(source))
+
+        do {
+            print("Destination (Choose from ${Flights.validDestinations.joinToString()}): ")
+            destination = readLine()?.trim() ?: ""
+        } while (!Flights.isValidDestination(destination))
+
+        print("Preferred Time: ")
+        preferredTime = readLine()?.trim() ?: ""
+
+        print("Is this a one-way trip? (yes/no): ")
+        val isOneWayInput = readLine()?.trim()
+        isOneWay = isOneWayInput.equals("yes", ignoreCase = true)
+    }
+
+    fun findMatchingFlights() {
+        oneWayFlights = Flights.findMatchingFlights(source, destination)
+
+        if (!isOneWay) {
+            twoWayFlights = Flights.findMatchingFlights(destination, source)
+        }
+    }
+
+    fun displayBookingDetails() {
+        println("Booking Details:")
+        println("Source: $source")
+        println("Destination: $destination")
+        println("Preferred Time: $preferredTime")
+        println("Trip Type: ${if (isOneWay) "One-way" else "Two-way"}")
+
+        if (oneWayFlights.isNotEmpty()) {
+            println("\nFlights from $source to $destination:")
+            displayFlightTableHeader()
+            for (flight in oneWayFlights) {
+                displayFlightTableRow(flight)
+            }
+        }
+
+        if (!isOneWay && twoWayFlights.isNotEmpty()) {
+            println("\nFlights from $destination to $source:")
+            displayFlightTableHeader()
+            for (flight in twoWayFlights) {
+                displayFlightTableRow(flight)
+            }
+        }
+    }
+
+    fun displayFlightTableHeader() {
+        println("| %-15s | %-15s | %-15s | %-15s | %-10s |".format("Source", "Destination", "Departure Time", "Arrival Time", "Price/Seat"))
+        println("|-----------------|-----------------|-----------------|-----------------|------------|")
+    }
+
+    fun displayFlightTableRow(flight: Flight) {
+        println("| %-15s | %-15s | %-15s | %-15s | $%-9.2f |".format(flight.source, flight.destination, flight.departureTime, flight.arrivalTime, flight.pricePerSeat))
+    }
+}

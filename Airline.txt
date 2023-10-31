@@ -1,0 +1,14 @@
+import Airline.Login
+
+fun main() {
+    val login = Login()
+    if (login.performLogin()) {
+        val booking = Booking()
+        booking.greetUser()
+        booking.getUserInput()
+        booking.findMatchingFlights()
+        booking.displayBookingDetails()
+    } else {
+        println("Exiting the program.")
+    }
+}

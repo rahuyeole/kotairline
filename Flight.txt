@@ -1,0 +1,46 @@
+import java.io.File
+import java.io.IOException
+
+data class Flight(
+    val source: String,
+    val destination: String,
+    val departureTime: String,
+    val arrivalTime: String,
+    val pricePerSeat: Double = 0.0
+)
+
+object Flights {
+    val validSources = listOf("New York", "Los Angeles", "Chicago", "Miami", "Seattle")
+    val validDestinations = listOf("London", "Paris", "Tokyo", "Sydney", "Dubai")
+
+    val flights: List<Flight> = readFlightsFromFile("C:\\Users\\ryeole.ext\\IdeaProjects\\Trial\\src\\main\\kotlin\\Airline\\flights.txt")
+
+    fun readFlightsFromFile(fileName: String): List<Flight> {
+        val flights = mutableListOf<Flight>()
+        try {
+            val lines = File(fileName).readLines()
+            for (line in lines) {
+                val parts = line.split(",")
+                if (parts.size == 5) {
+                    val flight = Flight(parts[0], parts[1], parts[2], parts[3], parts[4].toDouble())
+                    flights.add(flight)
+                }
+            }
+        } catch (e: IOException) {
+            println("Error reading flight data from the file.")
+        }
+        return flights
+    }
+
+    fun isValidSource(source: String): Boolean {
+        return source in validSources
+    }
+
+    fun isValidDestination(destination: String): Boolean {
+        return destination in validDestinations
+    }
+
+    fun findMatchingFlights(source: String, destination: String): List<Flight> {
+        return flights.filter { it.source == source && it.destination == destination }
+    }
+}

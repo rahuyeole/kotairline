@@ -1,0 +1,38 @@
+package Airline
+
+class Login {
+    fun performLogin(): Boolean {
+        println("Welcome to the Airline Reservation System.")
+        println("Please log in.")
+
+        print("Username: ")
+        val username = readLine()
+        print("Password: ")
+        val password = readLine()
+
+        // Perform authentication logic here
+        val isAuthenticated = authenticate(username, password)
+
+        if (isAuthenticated) {
+            println("Login successful.")
+        } else {
+            println("Login failed. Please try again.")
+        }
+
+        return isAuthenticated
+    }
+
+    private fun authenticate(username: String?, password: String?): Boolean {
+        // Define a list of valid username-password pairs
+        val validUsers = mapOf(
+            "user1" to "password1",
+            "user2" to "password2",
+            "user3" to "password3",
+            "user4" to "password4",
+            "user5" to "password5"
+        )
+
+        // Check if the entered username and password match any valid pair
+        return validUsers[username] == password
+    }
+}

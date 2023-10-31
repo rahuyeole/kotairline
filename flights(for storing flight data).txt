@@ -1,0 +1,7 @@
+New York,Dubai,08:00 AM,10:30 AM,350.00
+New York,Dubai,10:00 AM,12:30 AM,360.00
+New York,Dubai,12:00 AM,2:30 AM,1000.00
+Chicago,Miami,11:00 AM,02:00 PM,1200.00
+Dubai,New York, 12:00 AM,4:00 PM,2300.00
+Dubai,New York, 2:00 AM,6:00 PM,250.00
+Dubai,New York, 12:00 AM,8:00 PM,450.00
